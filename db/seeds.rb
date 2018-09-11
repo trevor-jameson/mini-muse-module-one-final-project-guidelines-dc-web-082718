@@ -1,22 +1,44 @@
-class ImportCsv < ActiveRecord::Base
+class ImportCsv
 
-  def self.insert_data
+  def self.insert_artist_data
     # May need to drop all tables prior to added to DB
     file = File.open("db/albumlist.csv")
+    fields_to_insert =  %w{ Number Artist }
+    rows_to_insert = []
+    
     CSV.foreach(file, :headers => true) do |row|
-      # Instantiates class objects from row data
-      new_artist = Artist.create(:name => row["Artist"])
-      new_album = Album.create(:name => row["Album"], :year => row["Year"])
-      new_genre = Genre.create(:name => row["Genre"])
+      row_hash = row.to_hash
+      output_hash = {}
+      output_hash[:id] = row_hash["Number"]
+      output_hash[:name] = row_hash["Artist"]
 
-      # Insert association data from newly instatiated objects
-      new_album.artist_id = new_artist.id
-      new_album.genre_id = new_genre.id
-      new_genre.album_id = new_album.id
-      new_join = AlbumGenre.create()
-      binding.pry
-      # test table is returning ID
-
+      rows_to_insert << output_hash
+      rows_to_insert.uniq! {|element| element[:name]}
     end
+
+    Artist.import(rows_to_insert)
   end
+
+  def self.insert_genre_data
+    # May need to drop all tables prior to added to DB
+    file = File.open("db/albumlist.csv")
+    fields_to_insert =  %w{ Number Genre }
+    rows_to_insert = []
+
+    CSV.foreach(file, :headers => true) do |row|
+      row_hash = row.to_hash
+
+      output_hash = {}
+      output_hash[:id] = row_hash["Number"]
+      output_hash[:name] = row_hash["Genre"]
+
+      rows_to_insert << output_hash
+      rows_to_insert.uniq! {|element| element[:name]}
+    end
+
+    Genre.import(rows_to_insert)
+  end
+
+
+
 end

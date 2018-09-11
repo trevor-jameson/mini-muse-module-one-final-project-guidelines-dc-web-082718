@@ -7,16 +7,16 @@ class CreateTables < ActiveRecord::Migration
       t.string :name
       t.integer :year
       t.integer :artist_id
-      t.integer :genre_id
+
     end
       create_table :genres do |t|
         t.string :name
-        t.integer :album_id # maybe?
-        # Consider adding sub-genres as seperate table
+      # Consider adding sub-genres as seperate table
     end
       create_table :album_genres do |t|
         t.integer :album_id
         t.integer :genre_id
+
       end
   end
 end
