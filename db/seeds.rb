@@ -7,10 +7,13 @@ class ImportCsv < ActiveRecord::Base
       # Instantiates class objects from row data
       new_artist = Artist.create(:name => row["Artist"])
       new_album = Album.create(:name => row["Album"], :year => row["Year"])
-      new_join = AlbumGenre.create()
       new_genre = Genre.create(:name => row["Genre"])
-      
-      #insert data
+
+      # Insert association data from newly instatiated objects
+      new_album.artist_id = new_artist.id
+      new_album.genre_id = new_genre.id
+      new_genre.album_id = new_album.id
+      new_join = AlbumGenre.create()
       binding.pry
       # test table is returning ID
 
