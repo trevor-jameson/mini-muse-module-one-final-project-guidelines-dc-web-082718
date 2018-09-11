@@ -1,5 +1,5 @@
 development:
   adapter: sqlite3
-  database: db/greatest_albums.db
+  database: db/migrate/greatest_albums.db
   pool: 5
   timeout: 5000
