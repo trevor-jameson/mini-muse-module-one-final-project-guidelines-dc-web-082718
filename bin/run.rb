@@ -1,3 +1,4 @@
 require_relative '../config/environment'
 
-Artscii.welcome
+Interface.welcome
+Interface.main_menu
