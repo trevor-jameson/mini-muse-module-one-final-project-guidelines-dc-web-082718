@@ -58,7 +58,7 @@ What would you like to learn about today?
         when "5"
           #exit the program
             puts "Goodbye!"
-          return
+          break
         end
         "Please select a valid option"
       end
@@ -106,7 +106,43 @@ end
 
 
   def self.artist_3
+    Screen.clear
 
+    artist_loop_active = true
+    while artist_loop_active
+    print <<-TEXT
+  \nWhat information do you want to know about an artist?
+    1. Get top 3 albums by a specific artist
+    2. Get the most popular album by a specific artist
+    3. Go to Main Menu
+    TEXT
+    print "Input: "
+    user_input = gets.chomp
+
+    case user_input
+    when "1"
+      #print top 3 albums from chosen artist
+      print "Write artist do you want to know about: "
+      artist_name = gets.chomp
+
+      puts "\nThis artist's top 3 albums are: "
+      Artist.top3_popular_album(artist_name)
+
+    when "2"
+      #print top album from chosen artist
+      print "Write artist do you want to know about: "
+      artist_name = gets.chomp
+
+      print "\nThis artist's top album is: "
+      Artist.most_popular_album(artist_name)
+    
+    when "3"
+      Screen.clear
+      artist_loop_active = false
+    else
+      puts "\nPlease select a valid option.\n"
+    end
+    end
   end
 
   # End of class definition
