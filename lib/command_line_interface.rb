@@ -15,6 +15,7 @@ class Interface
       puts "What would you like to learn about today?"
       case user_input
       when "1"
+      end
     end
   end
 end

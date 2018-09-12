@@ -32,12 +32,12 @@ namespace :import do
     ImportCsv.insert_albumgenre_data
   end
 
-  desc 'Import all data from csv'
-  task :all do
-    import:artist
-    import:genre
-    import:album
-    import:albumgenre
-  end
+  # desc 'Import all data from csv'
+  # task :all do
+  #   import:artist
+  #   import:genre
+  #   import:album
+  #   import:albumgenre
+  # end
 
 end
