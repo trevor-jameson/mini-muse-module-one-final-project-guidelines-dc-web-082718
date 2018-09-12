@@ -3,6 +3,7 @@ class Album < ActiveRecord::Base
   has_many :album_genres
   has_many :genres, through: :album_genres
 
+
   def self.get_all_names
     # outputs every single album name
     puts self.pluck(:name)
