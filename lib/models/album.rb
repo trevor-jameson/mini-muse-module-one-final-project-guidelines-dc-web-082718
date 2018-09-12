@@ -8,10 +8,20 @@ class Album < ActiveRecord::Base
     puts self.pluck(:name)
   end
 
-  def self.top5_artist_from_decade(input_year)
-    #select all artist_id in a specific decade
-    input_year = input_year.to_a
-    artist_id = self.limit(5).where("? < year AND year > ?", input_year[0], input_year[9]).pluck(:artist_id)
+  def self.top5_artist_from_decade(input_years)
+    #select top 5 artist_id in a specific decade
+    input_years = input_years.to_a
+    top5_artist_id = self.limit(5).where(year: input_years[0]..input_years[9]).pluck(:artist_id)
+
+    top5_artist_id.each do |artist_id|
+      puts Artist.where("id = ?", artist_id).pluck(:name)
+    end
+  end
+
+  def self.top5_album_from_decade(input_years)
+    #select top 5 artist_id in a specific decade
+    input_years = input_years.to_a
+    puts self.limit(5).where(year: input_years[0]..input_years[9]).pluck(:name)
   end
 
 end
