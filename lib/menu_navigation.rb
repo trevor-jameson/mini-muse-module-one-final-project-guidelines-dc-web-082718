@@ -1,3 +1,5 @@
+ActiveRecord::Base.logger = nil
+
 # Call Screen.clear to clear screen before moving to another 'page' in interface
 module Screen
    def self.clear
@@ -23,8 +25,9 @@ module Interface
   end
 
   def self.invalid_option
-    Screen.clear
     puts "Please select a valid option.\n"
+    Screen.next
+    Screen.clear
     # End of self.invalid_option
   end
 
@@ -67,16 +70,22 @@ module Interface
     loop_active = true
 
     while loop_active
-      print "Would you like to see all artists, albums, or genres in the top 500?\n\s\s1. Artist\n\s\s2. Albums\n\s\s3. Genres\n\s\s4. Main Menu\n\s\sInput: "
+      print "\nWould you like to see all artists, albums, or genres in the top 500?\n\s\s1. Artist\n\s\s2. Albums\n\s\s3. Genres\n\s\s4. Main Menu\n\s\sInput: "
       user_input = gets.chomp
 
       case user_input
       when "1"
+        puts "\nHere's a list of all artists in the top 500 albums:"
         Artist.get_all_names
+        Screen.next
       when "2"
+        puts "\nHere's a list of all top 500 albums:"
         Album.get_all_names
+        Screen.next
       when "3"
+        puts "\nHere's a list of the genres listed in the top 500 albums:"
         Genre.get_all_names
+        Screen.next
       when "4"
         loop_active = false
         Screen.clear
@@ -141,9 +150,11 @@ module Interface
       case user_input
       when "1"
         Album.top5_album_from_decade(input_years_range)
+        Screen.next
         loop_active = false
       when "2"
         Album.top5top5_artist_from_decade(input_years_range)
+        Screen.next
         loop_active = false
       when "3"
         self.main_menu_option_2
@@ -216,11 +227,13 @@ module Interface
         puts "\nThis genre's top 5 albums are: "
         # print top 5 albums from chosen genre
         Genre.top5_albums(genre_id)
+        Screen.next
         second_loop_active = false
       when "2"
         puts "\nThis artist's top 5 artists are: "
         # print top 5 artists from chosen genre
         Genre.top5_artists(genre_id)
+        Screen.next
         second_loop_active = false
       when "3"
         Screen.clear
