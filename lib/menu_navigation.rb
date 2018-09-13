@@ -97,9 +97,6 @@ def self.decade_2
 end
 
 
-
-
-
   def self.artist_3
     Screen.clear
 
