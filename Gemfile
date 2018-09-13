@@ -3,7 +3,7 @@ source "https://rubygems.org"
 
 gem "sinatra-activerecord"
 gem "sqlite3"
-gem "pry-byebug"
+gem "pry"
 gem "require_all"
 gem "csv"
 gem "activerecord-import"
