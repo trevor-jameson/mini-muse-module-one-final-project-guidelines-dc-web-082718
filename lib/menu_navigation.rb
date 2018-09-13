@@ -37,27 +37,6 @@ module Interface
 
       # Evaluate user input
       case user_input
-
-        when "1"
-          # Choose from artist, album, or genre
-          self.all_things_1
-        when "2"
-          # Choose decade from pre-determined list 50s to 2000s
-          self.decade_2
-        when "3"
-          # Choose artist, return top 3 most popular albums
-          self.artist_3
-        when "4"
-          # Choose genre, return top 3 most popular albums
-          self.genre_4
-        when "5"
-          #exit the program
-            puts "Goodbye!"
-          break
-        else
-          puts "\nPlease select a valid option."
-        end
-
       when "1"
         # Choose from artist, album, or genre
         self.all_things_1
@@ -78,23 +57,23 @@ module Interface
         #exit the program
         puts "Goodbye!"
         return
-
+      else
+        puts "\nPlease select a valid option"
       end
     end
-        "Please select a valid option"
   end
 
-
   def self.all_things_1
-    while true
+    all_things_loop = true
+    while all_things_loop
     print <<-TEXT
     Would you like to see all artists, albums, or genres in the top 500?
     1. Artist
     2. Albums
     3. Genres
     4. Main Menu
-    Input:
     TEXT
+    puts "\nInput: "
     user_input = gets.chomp
     case user_input
     when "1"
@@ -104,9 +83,10 @@ module Interface
     when "3"
       Genre.get_all_names
     when "4"
-      self.main_menu
-    end
-    "Please select a valid option"
+      Screen.clear
+      all_things_loop = false
+    else
+    puts "\nPlease select a valid option."
     end
   end
 
@@ -124,7 +104,7 @@ module Interface
     5. 1990s
     6. 2000s
     7. 2010s
-    8. Main Menu
+    8. Go to Main Menu
     TEXT
     print "\tInput: "
 
@@ -165,6 +145,31 @@ module Interface
   TEXT
   print "\tInput: "
 
+def self.decade_2_1
+  # print top 5 albums from chosen decade (need input_years in range(1950..1959))
+  info = nil
+  while info != "1" || info != "2" || info != "3"
+    Screen.clear
+
+  info = gets.chomp
+  end
+  Album.top5_album_from_decade(input_years)
+end
+
+def self.decade_2_2
+  # print top 5 artists from chosen decade (need input_years in range(1950..1959))
+  info = nil
+  while info != "1" || info != "2" || info != "3"
+  Screen.clear
+  print <<-TEXT
+  What info would you like to view from this decade?
+  1. Top 5 albums
+  2. Top 5 artists
+  TEXT
+  print "  Input: "
+  info = gets.chomp
+  end
+  Album.top5_artist_from_decade(input_years)
 end
 
 
@@ -267,33 +272,6 @@ end
       puts "\nPlease select a valid option.\n"
     end
     end
-
-  def self.decade_2_1
-    # print top 5 albums from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
-      Screen.clear
-
-    info = gets.chomp
-    end
-    Album.top5_album_from_decade(input_years)
-  end
-
-  def self.decade_2_2
-    # print top 5 artists from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
-    Screen.clear
-    print <<-TEXT
-    What info would you like to view from this decade?
-    1. Top 5 albums
-    2. Top 5 artists
-    TEXT
-    print "  Input: "
-    info = gets.chomp
-    end
-    Album.top5_artist_from_decade(input_years)
-
   end
 
   # End of class definition
