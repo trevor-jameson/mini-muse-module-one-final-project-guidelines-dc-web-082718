@@ -5,6 +5,13 @@ module Screen
    def self.clear
        print "\ec\e[3J"
    end
+
+   def self.next
+     user_input = nil
+     while user_input == nil
+       user_input = gets.chomp
+     end
+   end
 end
 
 module Interface
@@ -12,10 +19,7 @@ module Interface
     Artscii.welcome
     print "Welcome to Mini-Muse! The data analytics app for the 500 greatest albums of all time.\n\nEnter any key to begin: "
     # Loop will break once any input is entered
-    user_input = nil
-    while user_input == nil
-      user_input = gets
-    end
+    Screen.next
     Screen.clear
   # End of self.welcome definition
   end
@@ -37,6 +41,11 @@ module Interface
       case user_input
       when "1"
         # Choose from artist, album, or genre
+
+        self.all_things_1
+      when "2"
+        # Choose decade from pre-determined list 50s to 2000s
+        self.decade_2
         self.main_menu_option_1
       when "2"
         # Choose decade from pre-determined list 50s to 2000s
@@ -66,7 +75,7 @@ module Interface
     while loop_active
       print "Would you like to see all artists, albums, or genres in the top 500?\n\s\s1. Artist\n\s\s2. Albums\n\s\s3. Genres\n\s\s4. Main Menu\n\s\sInput: "
       user_input = gets.chomp
-
+      
       case user_input
       when "1"
         Artist.get_all_names
@@ -75,14 +84,14 @@ module Interface
       when "3"
         Genre.get_all_names
       when "4"
-        break # Will this break to main menu?
+        loop_active = false
+        Screen.clear
       else
         self.invalid_option
       end
     end
   # End of self.main_menu_option_1 definition
   end
-
 
   def self.main_menu_option_2
     input_years = 0
@@ -154,7 +163,6 @@ module Interface
 
   def self.artist_3
     Screen.clear
-
     loop_active = true
     while loop_active
       print "What information do you want to know about an artist?\n\s\s1. Get the top 3 albums by a specific artist\n\s\s2. Get the most popular album by a specific artist\n\s\s3. Get which genres an artist is part of\n\s\s4. Go to Main Menu\n\s\s\sInput: "
@@ -168,22 +176,26 @@ module Interface
 
         puts "\nThis artist's top 3 albums are: "
         Artist.top3_popular_album(artist_name)
-
+        Screen.next
       when "2"
         #print top album from chosen artist
         print "Which artist do you want to know about: "
         artist_name = gets.chomp
-
         print "\nThis artist's top album is: "
         Artist.most_popular_album(artist_name)
-
+        Screen.next
       when "3"
         print "Which artist do you want to know about: "
         artist_name = gets.chomp
-
         puts "\nThis artist is part of these genres: "
         Artist.genres_part_of(artist_name)
-
+        Screen.next
+      when "4"
+        Screen.clear
+        artist_loop_active = false
+      else
+        Screen.invalid_input
+        Screen.next
       when "4"
         Screen.clear
         loop_active = false
@@ -193,65 +205,42 @@ module Interface
     end
   end
 
+  # Review method ends and formatting
   def self.genre_4
     Screen.clear
-
     loop_active = true
+    genre_id = -1
     while loop_active
       print "\nWhich genre do you want to know about:\n\s\s1. Rock\n\s\s2. Pop\n\s\s3. Funk / Soul\n\s\s4. Blues\n\s\s5. Jazz\n\s\s6. Folk\n\s\s7. World & Country\n\s\s8. Classical\n\s\s9. Stage & Screen\n\s\s10. Reggae\n\s\s11. Hip Hop\n\s\s12. Electronic\n\s\s13. Latin\n\s\s14. Main Menu\n\s\s\n\s\s\sInput: "
-      input_genre = gets.chomp
-      # Run
-
-
+      genre_id = gets.chomp
+      if genre_id > 0 && genre_id < 14
+        loop_active = false
+      else
+        self.invalid_option
+      end
+    end
+    second_loop_active = true
+    while second_loop_active
       print "\nWhat information do you want to know about this genre?\n\s\s\n\s\s1. Get the top 5 albums from a specific genre\n\s\s2. Get the top 5 artists from a specific genre\n\s\s3. Go to Main Menu\n\s\sInput: "
       user_input = gets.chomp
-
       case user_input
       when "1"
         puts "\nThis genre's top 5 albums are: "
         # print top 5 albums from chosen genre
         Genre.top5_albums(genre_id)
-
+        second_loop_active = false
       when "2"
         puts "\nThis artist's top 5 artists are: "
         # print top 5 artists from chosen genre
         Genre.top5_artists(genre_id)
-
+        second_loop_active = false
       when "3"
         Screen.clear
-        loop_active = false
+        second_loop_active = false
       else
-        puts "\nPlease select a valid option.\n"
+        self.invalid_input
       end
     end
-  end
-
-  def self.decade_2_1
-    # print top 5 albums from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
-      Screen.clear
-
-    info = gets.chomp
-    end
-    Album.top5_album_from_decade(input_years)
-  end
-
-  def self.decade_2_2
-    # print top 5 artists from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
-    Screen.clear
-    print <<-TEXT
-    What info would you like to view from this decade?
-    1. Top 5 albums
-    2. Top 5 artists
-    TEXT
-    print "  Input: "
-    info = gets.chomp
-    end
-    Album.top5_artist_from_decade(input_years)
-    # End of self.decade_2_3 definition
   end
   # End of class definition
 end
