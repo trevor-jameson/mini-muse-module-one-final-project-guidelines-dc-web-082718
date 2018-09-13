@@ -136,6 +136,8 @@ module Interface
       when "8"
         decade_loop_active = false
         return # Will this return to main menu method?
+      else
+      puts "\nPlease select a valid option."
       end
     end
     Screen.clear
