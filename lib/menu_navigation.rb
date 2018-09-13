@@ -25,14 +25,14 @@ class Interface
     # This will loop forever, until the user enters a valid option
     while true
       print <<-TEXT
-What would you like to learn about today?
+\nWhat would you like to learn about today?
   1. List of all artists, albums, or genres
   2. Info from a specific decade
   3. Info about an artist
   4. Info about a genre
   5. Close program
       TEXT
-      print "  Input: "
+      print "  \nInput: "
       user_input = gets.chomp
 
       # Evaluate user input
@@ -49,18 +49,13 @@ What would you like to learn about today?
         when "4"
           # Choose genre, return top 3 most popular albums
           self.genre_4
-          # print top 5 albums from chosen genre
-          Genre.top5_albums(genre_name)
-
-          # print top 5 artists from chosen genre
-          Genre.top5_artists(genre_name)
-
         when "5"
           #exit the program
             puts "Goodbye!"
           break
+        else
+          puts "\nPlease select a valid option."
         end
-        "Please select a valid option"
       end
     end
 
@@ -116,13 +111,13 @@ end
     2. Get the most popular album by a specific artist
     3. Go to Main Menu
     TEXT
-    print "Input: "
+    print "\nInput: "
     user_input = gets.chomp
 
     case user_input
     when "1"
       #print top 3 albums from chosen artist
-      print "Write artist do you want to know about: "
+      print "Which artist do you want to know about: "
       artist_name = gets.chomp
 
       puts "\nThis artist's top 3 albums are: "
@@ -130,15 +125,68 @@ end
 
     when "2"
       #print top album from chosen artist
-      print "Write artist do you want to know about: "
+      print "Which artist do you want to know about: "
       artist_name = gets.chomp
 
       print "\nThis artist's top album is: "
       Artist.most_popular_album(artist_name)
-    
+
     when "3"
       Screen.clear
       artist_loop_active = false
+    else
+      puts "\nPlease select a valid option.\n"
+    end
+    end
+  end
+
+  def self.genre_4
+    Screen.clear
+
+    genre_loop_active = true
+    while genre_loop_active
+    print <<-TEXT
+  \nWhich genre do you want to know about:
+    1. Rock
+    2. Pop
+    3. Funk / Soul
+    4. Blues
+    5. Jazz
+    6. Folk
+    7. World & Country
+    8. Classical
+    9. Stage & Screen
+    10. Reggae
+    11. Hip Hop
+    12. Electronic
+    13. Latin
+    TEXT
+    print "\nInput: "
+    genre_id = gets.chomp
+
+    print <<-TEXT
+    What information do you want to know about this genre?
+      1. Get the top 5 albums from a specific genre
+      2. Get the top 5 artists from a specific genre
+      3. Go to Main Menu
+      TEXT
+      print "\nInput: "
+      user_input = gets.chomp
+
+    case user_input
+    when "1"
+      puts "\nThis genre's top 5 albums are: "
+      # print top 5 albums from chosen genre
+      Genre.top5_albums(genre_id)
+
+    when "2"
+      puts "\nThis artist's top 5 artists are: "
+      # print top 5 artists from chosen genre
+      Genre.top5_artists(genre_id)
+
+    when "3"
+      Screen.clear
+      genre_loop_active = false
     else
       puts "\nPlease select a valid option.\n"
     end

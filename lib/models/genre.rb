@@ -8,9 +8,7 @@ class Genre < ActiveRecord::Base
     puts self.pluck(:name)
   end
 
-  def self.top5_albums(genre_name)
-    # get genre_id
-    genre_id = self.where("name = ?", genre_name).pluck(:id)
+  def self.top5_albums(genre_id)
     # get the top 5 album_id of this genre
     top5_album_id = AlbumGenre.limit(5).where("genre_id = ?", genre_id).pluck(:album_id)
     #get the album names
@@ -19,19 +17,19 @@ class Genre < ActiveRecord::Base
     end
   end
 
-  def self.top5_artists(genre_name)
-    # get genre_id
-    genre_id = self.where("name = ?", genre_name).pluck(:id)
+  def self.top5_artists(genre_id)
     # get the top 5 album_id of this genre
-    top5_album_id = AlbumGenre.limit(5).where("genre_id = ?", genre_id).pluck(:album_id)
+    top5_album_id = AlbumGenre.limit(10).where("genre_id = ?", genre_id).pluck(:album_id)
     #get the artist_id
     top5_artist_id = top5_album_id.map do |album_id|
       Album.where("id = ?", album_id).pluck(:artist_id)
     end.flatten
     #get the artists from artist_id
-    top5_artist_id.each do |artist_id|
-      puts Artist.where("id = ?", artist_id).pluck(:name)
+    arr = top5_artist_id.map do |artist_id|
+      Artist.where("id = ?", artist_id).pluck(:name)
     end
+    arr.uniq!
+    puts arr[0..4]
   end
 
 
