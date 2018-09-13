@@ -155,7 +155,7 @@ module Interface
         loop_active = false
       when "2"
         puts "\nThese are the top 5 artists from this decade:"
-        Album.top5top5_artist_from_decade(input_years_range)
+        Album.top5_artist_from_decade(input_years_range)
         Screen.next
         loop_active = false
       when "3"
