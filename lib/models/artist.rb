@@ -19,5 +19,16 @@ class Artist < ActiveRecord::Base
     puts Album.limit(1).where("artist_id = ?", artist_id).pluck(:name)
   end
 
+  def self.genres_part_of(artist_name)
+    artist_id = self.where("name = ?", artist_name).pluck(:id)
+    album_ids = Album.where("artist_id = ?", artist_id).pluck(:id)
+    genre_ids = album_ids.map do |album_id|
+      AlbumGenre.where("album_id = ?", album_id).pluck(:genre_id)
+    end.flatten
+    genre_names = genre_ids.map do |genre_id|
+      Genre.where("id = ?", genre_id).pluck(:name)
+    end
+    puts genre_names.uniq
+  end
 
 end

@@ -107,9 +107,10 @@ end
     while artist_loop_active
     print <<-TEXT
   \nWhat information do you want to know about an artist?
-    1. Get top 3 albums by a specific artist
+    1. Get the top 3 albums by a specific artist
     2. Get the most popular album by a specific artist
-    3. Go to Main Menu
+    3. Get which genres an artist is part of
+    4. Go to Main Menu
     TEXT
     print "\nInput: "
     user_input = gets.chomp
@@ -132,6 +133,13 @@ end
       Artist.most_popular_album(artist_name)
 
     when "3"
+      print "Which artist do you want to know about: "
+      artist_name = gets.chomp
+
+      puts "\nThis artist is part of these genres: "
+      Artist.genres_part_of(artist_name)
+
+    when "4"
       Screen.clear
       artist_loop_active = false
     else
