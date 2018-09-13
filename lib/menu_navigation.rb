@@ -149,10 +149,12 @@ module Interface
     while loop_active
       case user_input
       when "1"
+        puts "\nThese are the top 5 albums from this decade:"
         Album.top5_album_from_decade(input_years_range)
         Screen.next
         loop_active = false
       when "2"
+        puts "\nThese are the top 5 artists from this decade:"
         Album.top5top5_artist_from_decade(input_years_range)
         Screen.next
         loop_active = false
