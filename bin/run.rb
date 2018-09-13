@@ -11,6 +11,6 @@ require_relative '../config/environment'
 # rake["import:genre"].invoke
 # rake["import:album"].invoke
 # rake["import:albumgenre"].invoke
-
+Screen.clear
 Interface.welcome
 Interface.main_menu

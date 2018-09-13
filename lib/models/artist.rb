@@ -12,6 +12,7 @@ class Artist < ActiveRecord::Base
     artist_id = self.where("name = ?", artist_name).pluck(:id)
     # get the top 3 albums of this artist
     puts Album.limit(3).where("artist_id = ?", artist_id).pluck(:name)
+    binding.pry
   end
 
   def self.most_popular_album(artist_name)

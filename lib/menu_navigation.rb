@@ -5,6 +5,13 @@ module Screen
    def self.clear
        print "\ec\e[3J"
    end
+
+   def self.next
+     user_input = nil
+     while user_input == nil
+       user_input = gets
+     end
+   end
 end
 
 module Interface
@@ -12,11 +19,7 @@ module Interface
     Artscii.welcome
     print "Welcome to Mini-Muse! The data analytics app for the 500 greatest albums of all time.\n\nEnter any key to begin: "
     # Loop will break once any input is entered
-    user_input = nil
-    while user_input == nil
-      user_input = gets
-    end
-    Screen.clear
+    Screen.next
   end
 
 
@@ -40,19 +43,15 @@ module Interface
       when "1"
         # Choose from artist, album, or genre
         self.all_things_1
-        user_exit = false
       when "2"
         # Choose decade from pre-determined list 50s to 2000s
         self.decade_2
-        user_exit = false
       when "3"
         # Choose artist, return top 3 most popular albums
         self.artist_3
-        user_exit = false
       when "4"
         # Choose genre, return top 3 most popular albums
         self.genre_4
-        user_exit = false
       when "5"
         #exit the program
         puts "Goodbye!"
@@ -64,10 +63,10 @@ module Interface
   end
 
   def self.all_things_1
-    all_things_loop = true
-    while all_things_loop
+    allthings_loop_active = true
+    while allthings_loop_active
       print <<-TEXT
-      Would you like to see all artists, albums, or genres in the top 500?
+      \nWould you like to see all artists, albums, or genres in the top 500?
       1. Artist
       2. Albums
       3. Genres
@@ -77,14 +76,20 @@ module Interface
       user_input = gets.chomp
       case user_input
       when "1"
+        puts "\nHere's a list of all the artists in the top 500 albums:"
         Artist.get_all_names
+        Screen.next
       when "2"
+        puts "\nHere's a list of the top 500 albums:"
         Album.get_all_names
+        Screen.next
       when "3"
+        puts "\nHere's a list of all the genres listed in the top 500 albums:"
         Genre.get_all_names
+        Screen.next
       when "4"
         Screen.clear
-        all_things_loop = false
+        allthings_loop_active = false
       else
       puts "\nPlease select a valid option."
       end
@@ -94,13 +99,12 @@ module Interface
 
   def self.decade_2
     decade_loop_active = true
-    Screen.clear
     while decade_loop_active
       print <<-TEXT
       Which decade would you like to view?
       1. 1950s
       2. 1960s
-      3. 1970a
+      3. 1970s
       4. 1980s
       5. 1990s
       6. 2000s
@@ -135,44 +139,36 @@ module Interface
         decade_loop_active = false
       when "8"
         decade_loop_active = false
-        return # Will this return to main menu method?
+        Screen.clear
       else
       puts "\nPlease select a valid option."
       end
     end
-    Screen.clear
+
     print <<-TEXT
     What info would you like to view from this decade?
     1. Top 5 albums
     2. Top 5 artists
+    3. Go to Main Menu
     TEXT
     print "\tInput: "
-  end
 
-  def self.decade_2_1
-    # print top 5 albums from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
+    another_input = gets.chomp
+    case another_input
+    when "1"
+      puts "\nThis decade's top 5 albums are:"
+      Album.top5_album_from_decade(input_years)
+      Screen.next
+    when "2"
+      puts "\nThis decade's top 5 artists are:"
+      Album.top5_artist_from_decade(input_years)
+      Screen.next
+    when "3"
+      decade_loop_active = false
       Screen.clear
-      info = gets.chomp
+    else
+      puts "\nPlease select a valid option."
     end
-    Album.top5_album_from_decade(input_years)
-  end
-
-  def self.decade_2_2
-    # print top 5 artists from chosen decade (need input_years in range(1950..1959))
-    info = nil
-    while info != "1" || info != "2" || info != "3"
-      Screen.clear
-      print <<-TEXT
-      What info would you like to view from this decade?
-      1. Top 5 albums
-      2. Top 5 artists
-      TEXT
-      print "  Input: "
-      info = gets.chomp
-    end
-    Album.top5_artist_from_decade(input_years)
   end
 
   def self.artist_3
@@ -198,6 +194,7 @@ module Interface
 
         puts "\nThis artist's top 3 albums are: "
         Artist.top3_popular_album(artist_name)
+        Screen.next
 
       when "2"
         #print top album from chosen artist
@@ -206,6 +203,7 @@ module Interface
 
         print "\nThis artist's top album is: "
         Artist.most_popular_album(artist_name)
+        Screen.next
 
       when "3"
         print "Which artist do you want to know about: "
@@ -213,6 +211,7 @@ module Interface
 
         puts "\nThis artist is part of these genres: "
         Artist.genres_part_of(artist_name)
+        Screen.next
 
       when "4"
         Screen.clear
@@ -261,11 +260,13 @@ module Interface
         puts "\nThis genre's top 5 albums are: "
         # print top 5 albums from chosen genre
         Genre.top5_albums(genre_id)
+        Screen.next
 
       when "2"
         puts "\nThis artist's top 5 artists are: "
         # print top 5 artists from chosen genre
         Genre.top5_artists(genre_id)
+        Screen.next
 
       when "3"
         Screen.clear

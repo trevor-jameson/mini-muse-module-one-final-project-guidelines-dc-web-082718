@@ -12,11 +12,12 @@ class Album < ActiveRecord::Base
   def self.top5_artist_from_decade(input_years)
     #select top 5 artist_id in a specific decade
     input_years = input_years.to_a
-    top5_artist_id = self.limit(5).where(year: input_years[0]..input_years[-1]).pluck(:artist_id)
-
-    top5_artist_id.each do |artist_id|
-      puts Artist.where("id = ?", artist_id).pluck(:name)
-    end
+    top5_artist_id = self.limit(10).where(year: input_years[0]..input_years[-1]).pluck(:artist_id)
+    arr = top5_artist_id.map do |artist_id|
+      Artist.where("id = ?", artist_id).pluck(:name)
+    end.flatten
+    arr.uniq!
+    puts arr[0..4]
   end
 
   def self.top5_album_from_decade(input_years)
