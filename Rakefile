@@ -32,12 +32,16 @@ namespace :import do
     ImportCsv.insert_albumgenre_data
   end
 
-  # desc 'Import all data from csv'
-  # task :all do
-  #   import:artist
-  #   import:genre
-  #   import:album
-  #   import:albumgenre
-  # end
+  # Rake import:all drops previous tables from greatest_albums.db and recreates and seeds the DB from the CSV
+  desc 'Import all data from csv'
+  task :all do
+    Rake::Task['db:reset'].invoke
+    Rake::Task['db:migrate'].invoke
+    Rake::Task['import:artist'].invoke
+    Rake::Task['import:genre'].invoke
+    Rake::Task['import:album'].invoke
+    Rake::Task['import:albumgenre'].invoke
+    Rake::Task['db:migrate:status'].invoke
+  end
 
 end
