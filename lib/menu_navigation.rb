@@ -1,5 +1,3 @@
-ActiveRecord::Base.logger = nil
-
 # Call Screen.clear to clear screen before moving to another 'page' in interface
 module Screen
    def self.clear
@@ -41,11 +39,6 @@ module Interface
       case user_input
       when "1"
         # Choose from artist, album, or genre
-
-        self.all_things_1
-      when "2"
-        # Choose decade from pre-determined list 50s to 2000s
-        self.decade_2
         self.main_menu_option_1
       when "2"
         # Choose decade from pre-determined list 50s to 2000s
@@ -60,6 +53,7 @@ module Interface
         #exit the program
         Screen.clear
         puts "\n\n\n\n\n\n\n\s\s\s\s\s\s\s\s\s\s(∗ ･‿･)ﾉ  Goodbye  (∗ ･‿･)ﾉ\n\n\n\n\n\n\n\n\n"
+        Screen.next
         break
       else
         self.invalid_option
