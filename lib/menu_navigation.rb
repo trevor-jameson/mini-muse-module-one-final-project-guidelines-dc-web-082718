@@ -75,7 +75,7 @@ module Interface
     while loop_active
       print "Would you like to see all artists, albums, or genres in the top 500?\n\s\s1. Artist\n\s\s2. Albums\n\s\s3. Genres\n\s\s4. Main Menu\n\s\sInput: "
       user_input = gets.chomp
-      
+
       case user_input
       when "1"
         Artist.get_all_names
@@ -192,12 +192,6 @@ module Interface
         Screen.next
       when "4"
         Screen.clear
-        artist_loop_active = false
-      else
-        Screen.invalid_input
-        Screen.next
-      when "4"
-        Screen.clear
         loop_active = false
       else
         self.invalid_option
@@ -209,7 +203,7 @@ module Interface
   def self.genre_4
     Screen.clear
     loop_active = true
-    genre_id = -1
+    genre_id = 0
     while loop_active
       print "\nWhich genre do you want to know about:\n\s\s1. Rock\n\s\s2. Pop\n\s\s3. Funk / Soul\n\s\s4. Blues\n\s\s5. Jazz\n\s\s6. Folk\n\s\s7. World & Country\n\s\s8. Classical\n\s\s9. Stage & Screen\n\s\s10. Reggae\n\s\s11. Hip Hop\n\s\s12. Electronic\n\s\s13. Latin\n\s\s14. Main Menu\n\s\s\n\s\s\sInput: "
       genre_id = gets.chomp
@@ -242,5 +236,6 @@ module Interface
       end
     end
   end
+
   # End of class definition
 end
