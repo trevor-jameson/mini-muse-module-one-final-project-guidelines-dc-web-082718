@@ -17,256 +17,214 @@ module Interface
       user_input = gets
     end
     Screen.clear
+  # End of self.welcome definition
   end
 
+  def self.invalid_option
+    Screen.clear
+    puts "Please select a valid option.\n"
+    # End of self.invalid_option
+  end
 
   def self.main_menu
     # This will loop until the user enters a valid option
-    user_exit = true
-    while user_exit
-      print <<-TEXT
-\nWhat would you like to learn about today?
-  1. List of all artists, albums, or genres
-  2. Info from a specific decade
-  3. Info about an artist
-  4. Info about a genre
-  5. Close program
-      TEXT
-      print "  \nInput: "
+    loop_active = true
+    while loop_active
+      print "\nWhat would you like to learn about today?\n\s\s1. List of all artists, albums, or genres\n\s\s2. Info from a specific decade\n\s\s3. Info about an artist\n\s\s4. Info about a genre\n\s\s5. Close program\n\n\s\s\sInput: "
       user_input = gets.chomp
 
       # Evaluate user input
       case user_input
-
-        when "1"
-          # Choose from artist, album, or genre
-          self.all_things_1
-        when "2"
-          # Choose decade from pre-determined list 50s to 2000s
-          self.decade_2
-        when "3"
-          # Choose artist, return top 3 most popular albums
-          self.artist_3
-        when "4"
-          # Choose genre, return top 3 most popular albums
-          self.genre_4
-        when "5"
-          #exit the program
-            puts "Goodbye!"
-          break
-        else
-          puts "\nPlease select a valid option."
-        end
-
       when "1"
         # Choose from artist, album, or genre
-        self.all_things_1
-        user_exit = false
+        self.main_menu_option_1
       when "2"
         # Choose decade from pre-determined list 50s to 2000s
-        self.decade_2
-        user_exit = false
+        self.main_menu_option_2
       when "3"
         # Choose artist, return top 3 most popular albums
         self.artist_3
-        user_exit = false
       when "4"
         # Choose genre, return top 3 most popular albums
         self.genre_4
-        user_exit = false
       when "5"
         #exit the program
-        puts "Goodbye!"
-        return
-
+        Screen.clear
+        puts "\n\n\n\n\n\n\n\s\s\s\s\s\s\s\s\s\s(∗ ･‿･)ﾉ  Goodbye  (∗ ･‿･)ﾉ\n\n\n\n\n\n\n\n\n"
+        break
+      else
+        self.invalid_option
       end
     end
-        "Please select a valid option"
+  # End of self.main_menu definition
   end
 
 
-  def self.all_things_1
-    while true
-    print <<-TEXT
-    Would you like to see all artists, albums, or genres in the top 500?
-    1. Artist
-    2. Albums
-    3. Genres
-    4. Main Menu
-    Input:
-    TEXT
-    user_input = gets.chomp
-    case user_input
-    when "1"
-      Artist.get_all_names
-    when "2"
-      Album.get_all_names
-    when "3"
-      Genre.get_all_names
-    when "4"
-      self.main_menu
+  def self.main_menu_option_1
+    loop_active = true
+
+    while loop_active
+      print "Would you like to see all artists, albums, or genres in the top 500?\n\s\s1. Artist\n\s\s2. Albums\n\s\s3. Genres\n\s\s4. Main Menu\n\s\sInput: "
+      user_input = gets.chomp
+
+      case user_input
+      when "1"
+        Artist.get_all_names
+      when "2"
+        Album.get_all_names
+      when "3"
+        Genre.get_all_names
+      when "4"
+        break # Will this break to main menu?
+      else
+        self.invalid_option
+      end
     end
-    "Please select a valid option"
-    end
+  # End of self.main_menu_option_1 definition
   end
 
 
-  def self.decade_2
-    decade_loop_active = true
+  def self.main_menu_option_2
+    input_years = 0
+    loop_active = true
     Screen.clear
-    while decade_loop_active
-    print <<-TEXT
-    Which decade would you like to view?
-    1. 1950s
-    2. 1960s
-    3. 1970a
-    4. 1980s
-    5. 1990s
-    6. 2000s
-    7. 2010s
-    8. Main Menu
-    TEXT
-    print "\tInput: "
+    while loop_active
+      # Format this block of text after resolving the end-of-input error
+      print "Which decade would you like to view?\n\s\s1. 1950s\n\s\s2. 1960s\n\s\s3. 1970a\n\s\s4. 1980s\n\s\s5. 1990s\n\s\s6. 2000s\n\s\s7. 2010s\n\s\s8. Main Menu\n\s\s\sInput: "
 
-    # Get user input
+      # Get user input
+      user_input = gets.chomp
+      case user_input
+      when "1"
+        input_years = 1950..1959
+        loop_active = false
+      when "2"
+        input_years = 1960..1969
+        loop_active = false
+      when "3"
+        input_years = 1970..1979
+        loop_active = false
+      when "4"
+        input_years = 1980..1989
+        loop_active = false
+      when "5"
+        input_years = 1990..1999
+        loop_active = false
+      when "6"
+        input_years = 2000..2010
+        loop_active = false
+      when "7"
+        input_years = 2011..2020
+        loop_active = false
+      when "8"
+        Screen.clear
+        break # Will this break to above menu?
+      else
+        self.invalid_option
+      end
+    end
+    self.main_menu_option_2_decade(input_years)
+  # End of self.main_menu_option_2
+  end
+
+
+  def self.main_menu_option_2_decade(input_years_range)
+    Screen.clear
+    print "What info would you like to view from this decade?\n\s\s1. Top 5 albums\n\s\s2. Top 5 artists\n\s\s3. Main Menu\n\s\s\sInput: "
     user_input = gets.chomp
-    case user_input
-    when "1"
-      input_years = 1950..1959
-      decade_loop_active = false
-    when "2"
-      input_years = 1960..1969
-      decade_loop_active = false
-    when "3"
-      input_years = 1970..1979
-      decade_loop_active = false
-    when "4"
-      input_years = 1980..1989
-      decade_loop_active = false
-    when "5"
-      input_years = 1990..1999
-      decade_loop_active = false
-    when "6"
-      input_years = 2000..2010
-      decade_loop_active = false
-    when "7"
-      input_years = 2011..2020
-      decade_loop_active = false
-    when "8"
-      decade_loop_active = false
-      return # Will this return to main menu method?
+    loop_active = true
+
+    while loop_active
+      case user_input
+      when "1"
+        Album.top5_album_from_decade(input_years_range)
+        loop_active = false
+      when "2"
+        Album.top5top5_artist_from_decade(input_years_range)
+        loop_active = false
+      when "3"
+        self.main_menu_option_2
+        loop_active = false
+      else
+        self.invalid_option
+      end
     end
   end
-  Screen.clear
-  print <<-TEXT
-  What info would you like to view from this decade?
-  1. Top 5 albums
-  2. Top 5 artists
-  TEXT
-  print "\tInput: "
-
-end
 
 
   def self.artist_3
     Screen.clear
 
-    artist_loop_active = true
-    while artist_loop_active
-    print <<-TEXT
-  \nWhat information do you want to know about an artist?
-    1. Get the top 3 albums by a specific artist
-    2. Get the most popular album by a specific artist
-    3. Get which genres an artist is part of
-    4. Go to Main Menu
-    TEXT
-    print "\nInput: "
-    user_input = gets.chomp
+    loop_active = true
+    while loop_active
+      print "What information do you want to know about an artist?\n\s\s1. Get the top 3 albums by a specific artist\n\s\s2. Get the most popular album by a specific artist\n\s\s3. Get which genres an artist is part of\n\s\s4. Go to Main Menu\n\s\s\sInput: "
+      user_input = gets.chomp
 
-    case user_input
-    when "1"
-      #print top 3 albums from chosen artist
-      print "Which artist do you want to know about: "
-      artist_name = gets.chomp
+      case user_input
+      when "1"
+        #print top 3 albums from chosen artist
+        print "Which artist do you want to know about: "
+        artist_name = gets.chomp
 
-      puts "\nThis artist's top 3 albums are: "
-      Artist.top3_popular_album(artist_name)
+        puts "\nThis artist's top 3 albums are: "
+        Artist.top3_popular_album(artist_name)
 
-    when "2"
-      #print top album from chosen artist
-      print "Which artist do you want to know about: "
-      artist_name = gets.chomp
+      when "2"
+        #print top album from chosen artist
+        print "Which artist do you want to know about: "
+        artist_name = gets.chomp
 
-      print "\nThis artist's top album is: "
-      Artist.most_popular_album(artist_name)
+        print "\nThis artist's top album is: "
+        Artist.most_popular_album(artist_name)
 
-    when "3"
-      print "Which artist do you want to know about: "
-      artist_name = gets.chomp
+      when "3"
+        print "Which artist do you want to know about: "
+        artist_name = gets.chomp
 
-      puts "\nThis artist is part of these genres: "
-      Artist.genres_part_of(artist_name)
+        puts "\nThis artist is part of these genres: "
+        Artist.genres_part_of(artist_name)
 
-    when "4"
-      Screen.clear
-      artist_loop_active = false
-    else
-      puts "\nPlease select a valid option.\n"
-    end
+      when "4"
+        Screen.clear
+        loop_active = false
+      else
+        self.invalid_option
+      end
     end
   end
 
   def self.genre_4
     Screen.clear
 
-    genre_loop_active = true
-    while genre_loop_active
-    print <<-TEXT
-  \nWhich genre do you want to know about:
-    1. Rock
-    2. Pop
-    3. Funk / Soul
-    4. Blues
-    5. Jazz
-    6. Folk
-    7. World & Country
-    8. Classical
-    9. Stage & Screen
-    10. Reggae
-    11. Hip Hop
-    12. Electronic
-    13. Latin
-    TEXT
-    print "\nInput: "
-    genre_id = gets.chomp
+    loop_active = true
+    while loop_active
+      print "\nWhich genre do you want to know about:\n\s\s1. Rock\n\s\s2. Pop\n\s\s3. Funk / Soul\n\s\s4. Blues\n\s\s5. Jazz\n\s\s6. Folk\n\s\s7. World & Country\n\s\s8. Classical\n\s\s9. Stage & Screen\n\s\s10. Reggae\n\s\s11. Hip Hop\n\s\s12. Electronic\n\s\s13. Latin\n\s\s14. Main Menu\n\s\s\n\s\s\sInput: "
+      input_genre = gets.chomp
+      # Run
 
-    print <<-TEXT
-    What information do you want to know about this genre?
-      1. Get the top 5 albums from a specific genre
-      2. Get the top 5 artists from a specific genre
-      3. Go to Main Menu
-      TEXT
-      print "\nInput: "
+
+      print "\nWhat information do you want to know about this genre?\n\s\s\n\s\s1. Get the top 5 albums from a specific genre\n\s\s2. Get the top 5 artists from a specific genre\n\s\s3. Go to Main Menu\n\s\sInput: "
       user_input = gets.chomp
 
-    case user_input
-    when "1"
-      puts "\nThis genre's top 5 albums are: "
-      # print top 5 albums from chosen genre
-      Genre.top5_albums(genre_id)
+      case user_input
+      when "1"
+        puts "\nThis genre's top 5 albums are: "
+        # print top 5 albums from chosen genre
+        Genre.top5_albums(genre_id)
 
-    when "2"
-      puts "\nThis artist's top 5 artists are: "
-      # print top 5 artists from chosen genre
-      Genre.top5_artists(genre_id)
+      when "2"
+        puts "\nThis artist's top 5 artists are: "
+        # print top 5 artists from chosen genre
+        Genre.top5_artists(genre_id)
 
-    when "3"
-      Screen.clear
-      genre_loop_active = false
-    else
-      puts "\nPlease select a valid option.\n"
+      when "3"
+        Screen.clear
+        loop_active = false
+      else
+        puts "\nPlease select a valid option.\n"
+      end
     end
-    end
+  end
 
   def self.decade_2_1
     # print top 5 albums from chosen decade (need input_years in range(1950..1959))
@@ -293,8 +251,7 @@ end
     info = gets.chomp
     end
     Album.top5_artist_from_decade(input_years)
-
+    # End of self.decade_2_3 definition
   end
-
   # End of class definition
 end
