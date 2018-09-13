@@ -3,10 +3,29 @@ class Album < ActiveRecord::Base
   has_many :album_genres
   has_many :genres, through: :album_genres
 
+  def self.for_long_lists(arr)
+    user_input = 0
+    arr.each.with_index(1) do |name, index|
+      puts "#{index}) #{name}"
+      if index % 10 == 0 && user_input != "n"
+        puts "\nDo you want to see more? [y/n]"
+        user_input = gets.chomp
+        puts "\n"
+
+        if user_input == "y"
+          next
+        elsif user_input == "n"
+          return
+        end
+      end
+    end
+  end
 
   def self.get_all_names
     # outputs every single album name
-    puts self.pluck(:name)
+    arr = self.pluck(:name)
+    self.for_long_lists(arr)
+
   end
 
   def self.top5_artist_from_decade(input_years)

@@ -4,7 +4,8 @@ class Artist < ActiveRecord::Base
 
   def self.get_all_names
     # outputs every single artist name
-    puts self.pluck(:name)
+    arr = self.pluck(:name)
+    Album.for_long_lists(arr)
   end
 
   def self.top3_popular_album(artist_name)

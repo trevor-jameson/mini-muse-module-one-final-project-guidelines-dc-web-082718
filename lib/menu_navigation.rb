@@ -77,11 +77,11 @@ module Interface
       when "1"
         puts "\nHere's a list of all artists in the top 500 albums:"
         Artist.get_all_names
-        Screen.next
+        Screen.clear
       when "2"
         puts "\nHere's a list of all top 500 albums:"
         Album.get_all_names
-        Screen.next
+        Screen.clear
       when "3"
         puts "\nHere's a list of the genres listed in the top 500 albums:"
         Genre.get_all_names
@@ -130,7 +130,7 @@ module Interface
         loop_active = false
       when "8"
         Screen.clear
-        break # Will this break to above menu?
+        loop_active = false
       else
         self.invalid_option
       end
