@@ -1,4 +1,4 @@
-ActiveRecord::Base.logger = nil
+# ActiveRecord::Base.logger = nil
 
 # Call Screen.clear to clear screen before moving to another 'page' in interface
 module Screen
@@ -14,7 +14,7 @@ module Screen
    end
 end
 
-module Interface
+class Interface
   def self.welcome
     Artscii.welcome
     print "Welcome to Mini-Muse! The data analytics app for the 500 greatest albums of all time.\n\nEnter any key to begin: "

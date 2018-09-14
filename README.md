@@ -1,12 +1,13 @@
-# Module One Final Project Guidelines
+## Welcome to MINI MUSE!
+The database analytics app for the top 500 albums of all time. MINI MUSE was developed as a proof of concept command line project by Brian H. Kang and Trevor S. Jameson for their Mod1 class at the Flatiron School. See the below steps to begin using the app.
 
-Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
+# Mini Muse Setup
+1. Create or update the database by running the command __rake import:all__
+2. Start the app by running the command __ruby bin/run.rb__
+3. Follow the prompts as they appear on the screen
 
-For your final project, we'll be building a Command Line database application.
 
-## Project Requirements
-
-### Option One - Data Analytics Project
+### Project Requirements
 
 1. Access a Sqlite3 Database using ActiveRecord.
 2. You should have at minimum three models including one join model. This means you must have a many-to-many relationship.
@@ -15,23 +16,20 @@ For your final project, we'll be building a Command Line database application.
 5. You should provide a CLI to display the return values of your interesting methods.  
 6. Use good OO design patterns. You should have separate classes for your models and CLI interface.
 
-### Option Two - Command Line CRUD App
+## Initial User Use Cases
+### Implemented
+- As a user, I want to find albums of a specific artist
+- As a user, I want to find albums from a specific decade
+- As a user, I want to search for all albums by an artist’s name
+- As a user, I want to find the most popular album for a genre or subgenre
+- As a developer, I want lots of command line gifs and memes in my app
 
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have a minimum of three models.
-3. You should build out a CLI to give your user full CRUD ability for at least one of your resources. For example, build out a command line To-Do list. A user should be able to create a new to-do, see all todos, update a todo item, and delete a todo. Todos can be grouped into categories, so that a to-do has many categories and categories have many to-dos.
-4. Use good OO design patterns. You should have separate models for your runner and CLI interface.
+### In Progress
+- As a user, implement the above methods according to another user’s preferences of favorite artist, album, and genre
+- As a user, I want to find all albums of a subgenre which includes the name of a genre
+- As a user
 
-### Brainstorming and Proposing a Project Idea
-
-Projects need to be approved prior to launching into them, so take some time to brainstorm project options that will fulfill the requirements above.  You must have a minimum of four [user stories](https://en.wikipedia.org/wiki/User_story) to help explain how a user will interact with your app.  A user story should follow the general structure of `"As a <role>, I want <goal/desire> so that <benefit>"`. In example, if we were creating an app to randomly choose nearby restaurants on Yelp, we might write:
-
-* As a user, I want to be able to enter my name to retrieve my records
-* As a user, I want to enter a location and be given a random nearby restaurant suggestion
-* As a user, I should be able to reject a suggestion and not see that restaurant suggestion again
-* As a user, I want to be able to save to and retrieve a list of favorite restaurant suggestions
-
-## Instructions
+## Instructor Instructions
 
 1. Fork and clone this repository.
 2. Build your application. Make sure to commit early and commit often. Commit messages should be meaningful (clearly describe what you're doing in the commit) and accurate (there should be nothing in the commit that doesn't match the description in the commit message). Good rule of thumb is to commit every 3-7 mins of actual coding time. Most of your commits should have under 15 lines of code and a 2 line commit is perfectly acceptable.
