@@ -102,7 +102,7 @@ class Interface
     Screen.clear
     while loop_active
       # Format this block of text after resolving the end-of-input error
-      print "Which decade would you like to view?\n\s\s1. 1950s\n\s\s2. 1960s\n\s\s3. 1970a\n\s\s4. 1980s\n\s\s5. 1990s\n\s\s6. 2000s\n\s\s7. 2010s\n\s\s8. Main Menu\n\s\s\sInput: "
+      print "Which decade would you like to view?\n\s\s1. 1950s\n\s\s2. 1960s\n\s\s3. 1970s\n\s\s4. 1980s\n\s\s5. 1990s\n\s\s6. 2000s\n\s\s7. 2010s\n\s\s8. Main Menu\n\s\s\sInput: "
 
       # Get user input
       user_input = gets.chomp
@@ -163,6 +163,7 @@ class Interface
         loop_active = false
       else
         self.invalid_option
+        break
       end
     end
   end
@@ -182,7 +183,7 @@ class Interface
         artist_name = gets.chomp
 
         if Artist.top3_popular_album(artist_name) != []
-          print "\nThis artist's top 3 albums are:"
+          print "\nThis artist's top 3 albums are:\n"
           puts Artist.top3_popular_album(artist_name)
           print "Press any key to continue: "
           Screen.next
