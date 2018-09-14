@@ -182,7 +182,7 @@ class Interface
         artist_name = gets.chomp
 
         if Artist.top3_popular_album(artist_name) != []
-          print "\nThis artist's top 3 albums are:"
+          print "\nThis artist's top 3 albums are:\n"
           puts Artist.top3_popular_album(artist_name)
           print "Press any key to continue: "
           Screen.next
