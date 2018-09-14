@@ -1,7 +1,7 @@
-## Welcome to MINI MUSE!
+# Welcome to MINI MUSE!
 The database analytics app for the top 500 albums of all time. MINI MUSE was developed as a proof of concept command line project by Brian H. Kang and Trevor S. Jameson for their Mod1 class at the Flatiron School. See the below steps to begin using the app.
 
-# Mini Muse Setup
+## Mini Muse Setup
 1. Create or update the database by running the command __rake import:all__
 2. Start the app by running the command __ruby bin/run.rb__
 3. Follow the prompts as they appear on the screen
