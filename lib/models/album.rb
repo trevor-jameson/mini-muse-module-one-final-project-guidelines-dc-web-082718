@@ -11,11 +11,12 @@ class Album < ActiveRecord::Base
         puts "\nDo you want to see more? [y/n]"
         user_input = gets.chomp
         puts "\n"
-
         if user_input == "y"
           next
         elsif user_input == "n"
           return
+        else
+          Interface.invalid_option
         end
       end
     end
@@ -37,12 +38,14 @@ class Album < ActiveRecord::Base
     end.flatten
     arr.uniq!
     puts arr[0..4]
+    print "Press any key to continue: "
   end
 
   def self.top5_album_from_decade(input_years)
     #select top 5 artist_id in a specific decade
     input_years = input_years.to_a
     puts self.limit(5).where(year: input_years[0]..input_years[9]).pluck(:name)
+    print "Press any key to continue: "
   end
 
 end

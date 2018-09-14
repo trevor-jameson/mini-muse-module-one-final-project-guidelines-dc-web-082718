@@ -6,6 +6,7 @@ class Genre < ActiveRecord::Base
   def self.get_all_names
     # outputs every single genre name
     puts self.pluck(:name)
+    print "Press any key to continue: "
   end
 
   def self.top5_albums(genre_id)
@@ -15,6 +16,7 @@ class Genre < ActiveRecord::Base
     top5_album_id.each do |album_id|
       puts Album.where("id = ?", album_id).pluck(:name)
     end
+    print "Press any key to continue: "
   end
 
   def self.top5_artists(genre_id)
@@ -31,6 +33,5 @@ class Genre < ActiveRecord::Base
     arr.uniq!
     puts arr[0..4]
   end
-
-
+  print "Press any key to continue: "
 end

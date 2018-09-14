@@ -1,14 +1,13 @@
 # Encountering error with dependency file.
 
-require_relative "../lib/menu_navigation.rb"
-require_relative "lib/ascii_art.rb"
+require_relative "../config/environment.rb"
 
 describe 'ScreenNavigationChecker' do
   let (:checker) {Screen.new}
 
   it "clears the screen when self.next is run" do
     expect($stdout).to receive(:puts).with("\ec\e[3J")
-    Interface.clear
+    Screen.clear
    end
 
    it "pauses until the user enters some input" do

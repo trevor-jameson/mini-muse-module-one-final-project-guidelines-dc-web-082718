@@ -1,4 +1,4 @@
-# ActiveRecord::Base.logger = nil
+ActiveRecord::Base.logger = nil
 
 # Call Screen.clear to clear screen before moving to another 'page' in interface
 module Screen
@@ -25,7 +25,7 @@ class Interface
   end
 
   def self.invalid_option
-    puts "Please select a valid option.\n"
+    print "Please select a valid option.\nInput: "
     Screen.next
     Screen.clear
     # End of self.invalid_option
@@ -79,7 +79,7 @@ class Interface
         Artist.get_all_names
         Screen.clear
       when "2"
-        puts "\nHere's a list of all top 500 albums:"
+        puts "\nHere's a list of all top 500 albums, ordered by popularity:"
         Album.get_all_names
         Screen.clear
       when "3"
@@ -130,7 +130,7 @@ class Interface
         loop_active = false
       when "8"
         Screen.clear
-        loop_active = false
+        return
       else
         self.invalid_option
       end
@@ -142,7 +142,7 @@ class Interface
 
   def self.main_menu_option_2_decade(input_years_range)
     Screen.clear
-    print "What info would you like to view from this decade?\n\s\s1. Top 5 albums\n\s\s2. Top 5 artists\n\s\s3. Main Menu\n\s\s\sInput: "
+    print "What info would you like to view from this decade?\n\s\s1. Top 5 albums\n\s\s2. Top 5 artists\n\s\s3. Previous Menu\n\s\s\sInput: "
     user_input = gets.chomp
     loop_active = true
 
@@ -184,9 +184,11 @@ class Interface
         if Artist.top3_popular_album(artist_name) != []
           print "\nThis artist's top 3 albums are:"
           puts Artist.top3_popular_album(artist_name)
+          print "Press any key to continue: "
           Screen.next
         elsif Artist.top3_popular_album(artist_name) == []
           puts "\nThat artist is not in the top 500 list."
+          print "Press any key to continue: "
           Screen.next
         end
       when "2"
@@ -197,9 +199,11 @@ class Interface
         if Artist.most_popular_album(artist_name) != []
           print "\nThis artist's top album is: "
           puts Artist.most_popular_album(artist_name)
+          print "Press any key to continue: "
           Screen.next
         elsif Artist.most_popular_album(artist_name) == []
           puts "\nThat artist is not in the top 500 list."
+          print "Press any key to continue: "
           Screen.next
         end
       when "3"
@@ -209,9 +213,11 @@ class Interface
         if Artist.genres_part_of(artist_name) != []
           puts "\nThis artist is part of these genres: "
           puts Artist.genres_part_of(artist_name)
+          print "Press any key to continue: "
           Screen.next
         elsif Artist.genres_part_of(artist_name) == []
           puts "\nThat artist is not in the top 500 list."
+          print "Press any key to continue: "
           Screen.next
         end
       when "4"
@@ -234,6 +240,9 @@ class Interface
       genre_id = genre_id.to_i
       if genre_id > 0 && genre_id < 14
         loop_active = false
+      elsif genre_id == 14
+        Screen.clear
+        return
       else
         self.invalid_option
       end
