@@ -172,31 +172,48 @@ class Interface
     Screen.clear
     loop_active = true
     while loop_active
-      print "What information do you want to know about an artist?\n\s\s1. Get the top 3 albums by a specific artist\n\s\s2. Get the most popular album by a specific artist\n\s\s3. Get which genres an artist is part of\n\s\s4. Go to Main Menu\n\s\s\sInput: "
+      print "\nWhat information do you want to know about an artist?\n\s\s1. Get the top 3 albums by a specific artist\n\s\s2. Get the most popular album by a specific artist\n\s\s3. Get which genres an artist is part of\n\s\s4. Go to Main Menu\n\s\s\sInput: "
       user_input = gets.chomp
 
       case user_input
       when "1"
         #print top 3 albums from chosen artist
-        print "Which artist do you want to know about: "
+        print "\nWhich artist do you want to know about: "
         artist_name = gets.chomp
 
-        puts "\nThis artist's top 3 albums are: "
-        Artist.top3_popular_album(artist_name)
-        Screen.next
+        if Artist.top3_popular_album(artist_name) != []
+          print "\nThis artist's top 3 albums are:"
+          puts Artist.top3_popular_album(artist_name)
+          Screen.next
+        elsif Artist.top3_popular_album(artist_name) == []
+          puts "\nThat artist is not in the top 500 list."
+          Screen.next
+        end
       when "2"
         #print top album from chosen artist
-        print "Which artist do you want to know about: "
+        print "\nWhich artist do you want to know about: "
         artist_name = gets.chomp
-        print "\nThis artist's top album is: "
-        Artist.most_popular_album(artist_name)
-        Screen.next
+
+        if Artist.most_popular_album(artist_name) != []
+          print "\nThis artist's top album is: "
+          puts Artist.most_popular_album(artist_name)
+          Screen.next
+        elsif Artist.most_popular_album(artist_name) == []
+          puts "\nThat artist is not in the top 500 list."
+          Screen.next
+        end
       when "3"
-        print "Which artist do you want to know about: "
+        print "\nWhich artist do you want to know about: "
         artist_name = gets.chomp
-        puts "\nThis artist is part of these genres: "
-        Artist.genres_part_of(artist_name)
-        Screen.next
+
+        if Artist.genres_part_of(artist_name) != []
+          puts "\nThis artist is part of these genres: "
+          puts Artist.genres_part_of(artist_name)
+          Screen.next
+        elsif Artist.genres_part_of(artist_name) == []
+          puts "\nThat artist is not in the top 500 list."
+          Screen.next
+        end
       when "4"
         Screen.clear
         loop_active = false
@@ -214,6 +231,7 @@ class Interface
     while loop_active
       print "\nWhich genre do you want to know about:\n\s\s1. Rock\n\s\s2. Pop\n\s\s3. Funk / Soul\n\s\s4. Blues\n\s\s5. Jazz\n\s\s6. Folk\n\s\s7. World & Country\n\s\s8. Classical\n\s\s9. Stage & Screen\n\s\s10. Reggae\n\s\s11. Hip Hop\n\s\s12. Electronic\n\s\s13. Latin\n\s\s14. Main Menu\n\s\s\n\s\s\sInput: "
       genre_id = gets.chomp
+      genre_id = genre_id.to_i
       if genre_id > 0 && genre_id < 14
         loop_active = false
       else
@@ -222,7 +240,7 @@ class Interface
     end
     second_loop_active = true
     while second_loop_active
-      print "\nWhat information do you want to know about this genre?\n\s\s\n\s\s1. Get the top 5 albums from a specific genre\n\s\s2. Get the top 5 artists from a specific genre\n\s\s3. Go to Main Menu\n\s\sInput: "
+      print "\nWhat information do you want to know about this genre?\n\s\s\n\s\s1. Get the top 5 albums from this genre\n\s\s2. Get the top 5 artists from this genre\n\s\s3. Go to Main Menu\n\s\sInput: "
       user_input = gets.chomp
       case user_input
       when "1"
@@ -232,7 +250,7 @@ class Interface
         Screen.next
         second_loop_active = false
       when "2"
-        puts "\nThis artist's top 5 artists are: "
+        puts "\nThis genre's top 5 artists are: "
         # print top 5 artists from chosen genre
         Genre.top5_artists(genre_id)
         Screen.next
